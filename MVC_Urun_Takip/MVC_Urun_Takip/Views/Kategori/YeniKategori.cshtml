@@ -1,0 +1,20 @@
+﻿@model MVC_Urun_Takip.Models.Entity.TBL_KATEGORI
+@{
+    ViewBag.Title = "YeniKategori";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<h2>Yeni Kategori</h2>
+<form class="form-group" method="post" style="margin-top:4%">
+    <div>
+        <label>Kategori Adı</label>
+        @Html.TextBoxFor(m => m.kategoriad, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.kategoriad, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:2% ">
+        <button class="btn btn-success" id="btn">Kategori Ekle</button>
+    </div>
+    <script>
+        $('#btn').click(function () { alert('Ekleme İşlemi Yapıldı!'); });
+    </script>
+</form>
+

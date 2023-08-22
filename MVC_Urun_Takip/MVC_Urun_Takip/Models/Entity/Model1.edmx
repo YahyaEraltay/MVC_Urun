@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Stok_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TBL_KATEGORI">
+          <Key>
+            <PropertyRef Name="kategoriid" />
+          </Key>
+          <Property Name="kategoriid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kategoriad" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TBL_MUSTERI">
+          <Key>
+            <PropertyRef Name="musteriid" />
+          </Key>
+          <Property Name="musteriid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="musteriad" Type="varchar" MaxLength="50" />
+          <Property Name="musterisoyad" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TBL_SATIS">
+          <Key>
+            <PropertyRef Name="satisid" />
+          </Key>
+          <Property Name="satisid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="urun" Type="int" />
+          <Property Name="musteri" Type="int" />
+          <Property Name="adet" Type="tinyint" />
+          <Property Name="fiyat" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="TBL_URUN">
+          <Key>
+            <PropertyRef Name="urunid" />
+          </Key>
+          <Property Name="urunid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="urunad" Type="varchar" MaxLength="50" />
+          <Property Name="marka" Type="varchar" MaxLength="50" />
+          <Property Name="urunkategori" Type="int" />
+          <Property Name="fiyat" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="stok" Type="tinyint" />
+        </EntityType>
+        <Association Name="FK_TBL_SATIS_TBL_MUSTERI">
+          <End Role="TBL_MUSTERI" Type="Self.TBL_MUSTERI" Multiplicity="0..1" />
+          <End Role="TBL_SATIS" Type="Self.TBL_SATIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_MUSTERI">
+              <PropertyRef Name="musteriid" />
+            </Principal>
+            <Dependent Role="TBL_SATIS">
+              <PropertyRef Name="musteri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_SATIS_TBL_URUN">
+          <End Role="TBL_URUN" Type="Self.TBL_URUN" Multiplicity="0..1" />
+          <End Role="TBL_SATIS" Type="Self.TBL_SATIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_URUN">
+              <PropertyRef Name="urunid" />
+            </Principal>
+            <Dependent Role="TBL_SATIS">
+              <PropertyRef Name="urun" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_URUN_TBL_KATEGORI">
+          <End Role="TBL_KATEGORI" Type="Self.TBL_KATEGORI" Multiplicity="0..1" />
+          <End Role="TBL_URUN" Type="Self.TBL_URUN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_KATEGORI">
+              <PropertyRef Name="kategoriid" />
+            </Principal>
+            <Dependent Role="TBL_URUN">
+              <PropertyRef Name="urunkategori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Stok_DBModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_KATEGORI" EntityType="Self.TBL_KATEGORI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_MUSTERI" EntityType="Self.TBL_MUSTERI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_SATIS" EntityType="Self.TBL_SATIS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_URUN" EntityType="Self.TBL_URUN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TBL_SATIS_TBL_MUSTERI" Association="Self.FK_TBL_SATIS_TBL_MUSTERI">
+            <End Role="TBL_MUSTERI" EntitySet="TBL_MUSTERI" />
+            <End Role="TBL_SATIS" EntitySet="TBL_SATIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_SATIS_TBL_URUN" Association="Self.FK_TBL_SATIS_TBL_URUN">
+            <End Role="TBL_URUN" EntitySet="TBL_URUN" />
+            <End Role="TBL_SATIS" EntitySet="TBL_SATIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_URUN_TBL_KATEGORI" Association="Self.FK_TBL_URUN_TBL_KATEGORI">
+            <End Role="TBL_KATEGORI" EntitySet="TBL_KATEGORI" />
+            <End Role="TBL_URUN" EntitySet="TBL_URUN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Stok_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TBL_KATEGORI">
+          <Key>
+            <PropertyRef Name="kategoriid" />
+          </Key>
+          <Property Name="kategoriid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kategoriad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_URUN" Relationship="Self.FK_TBL_URUN_TBL_KATEGORI" FromRole="TBL_KATEGORI" ToRole="TBL_URUN" />
+        </EntityType>
+        <EntityType Name="TBL_MUSTERI">
+          <Key>
+            <PropertyRef Name="musteriid" />
+          </Key>
+          <Property Name="musteriid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="musteriad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="musterisoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_SATIS" Relationship="Self.FK_TBL_SATIS_TBL_MUSTERI" FromRole="TBL_MUSTERI" ToRole="TBL_SATIS" />
+        </EntityType>
+        <EntityType Name="TBL_SATIS">
+          <Key>
+            <PropertyRef Name="satisid" />
+          </Key>
+          <Property Name="satisid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="urun" Type="Int32" />
+          <Property Name="musteri" Type="Int32" />
+          <Property Name="adet" Type="Byte" />
+          <Property Name="fiyat" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="TBL_MUSTERI" Relationship="Self.FK_TBL_SATIS_TBL_MUSTERI" FromRole="TBL_SATIS" ToRole="TBL_MUSTERI" />
+          <NavigationProperty Name="TBL_URUN" Relationship="Self.FK_TBL_SATIS_TBL_URUN" FromRole="TBL_SATIS" ToRole="TBL_URUN" />
+        </EntityType>
+        <EntityType Name="TBL_URUN">
+          <Key>
+            <PropertyRef Name="urunid" />
+          </Key>
+          <Property Name="urunid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="urunad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="marka" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="urunkategori" Type="Int32" />
+          <Property Name="fiyat" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="stok" Type="Byte" />
+          <NavigationProperty Name="TBL_KATEGORI" Relationship="Self.FK_TBL_URUN_TBL_KATEGORI" FromRole="TBL_URUN" ToRole="TBL_KATEGORI" />
+          <NavigationProperty Name="TBL_SATIS" Relationship="Self.FK_TBL_SATIS_TBL_URUN" FromRole="TBL_URUN" ToRole="TBL_SATIS" />
+        </EntityType>
+        <Association Name="FK_TBL_URUN_TBL_KATEGORI">
+          <End Role="TBL_KATEGORI" Type="Self.TBL_KATEGORI" Multiplicity="0..1" />
+          <End Role="TBL_URUN" Type="Self.TBL_URUN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_KATEGORI">
+              <PropertyRef Name="kategoriid" />
+            </Principal>
+            <Dependent Role="TBL_URUN">
+              <PropertyRef Name="urunkategori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_SATIS_TBL_MUSTERI">
+          <End Role="TBL_MUSTERI" Type="Self.TBL_MUSTERI" Multiplicity="0..1" />
+          <End Role="TBL_SATIS" Type="Self.TBL_SATIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_MUSTERI">
+              <PropertyRef Name="musteriid" />
+            </Principal>
+            <Dependent Role="TBL_SATIS">
+              <PropertyRef Name="musteri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_SATIS_TBL_URUN">
+          <End Role="TBL_URUN" Type="Self.TBL_URUN" Multiplicity="0..1" />
+          <End Role="TBL_SATIS" Type="Self.TBL_SATIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_URUN">
+              <PropertyRef Name="urunid" />
+            </Principal>
+            <Dependent Role="TBL_SATIS">
+              <PropertyRef Name="urun" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Stok_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TBL_KATEGORI" EntityType="Self.TBL_KATEGORI" />
+          <EntitySet Name="TBL_MUSTERI" EntityType="Self.TBL_MUSTERI" />
+          <EntitySet Name="TBL_SATIS" EntityType="Self.TBL_SATIS" />
+          <EntitySet Name="TBL_URUN" EntityType="Self.TBL_URUN" />
+          <AssociationSet Name="FK_TBL_URUN_TBL_KATEGORI" Association="Self.FK_TBL_URUN_TBL_KATEGORI">
+            <End Role="TBL_KATEGORI" EntitySet="TBL_KATEGORI" />
+            <End Role="TBL_URUN" EntitySet="TBL_URUN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_SATIS_TBL_MUSTERI" Association="Self.FK_TBL_SATIS_TBL_MUSTERI">
+            <End Role="TBL_MUSTERI" EntitySet="TBL_MUSTERI" />
+            <End Role="TBL_SATIS" EntitySet="TBL_SATIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_SATIS_TBL_URUN" Association="Self.FK_TBL_SATIS_TBL_URUN">
+            <End Role="TBL_URUN" EntitySet="TBL_URUN" />
+            <End Role="TBL_SATIS" EntitySet="TBL_SATIS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Stok_DBModelStoreContainer" CdmEntityContainer="Stok_DBEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Stok_DBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_KATEGORI">
+            <EntityTypeMapping TypeName="Stok_DBModel.TBL_KATEGORI">
+              <MappingFragment StoreEntitySet="TBL_KATEGORI">
+                <ScalarProperty Name="kategoriid" ColumnName="kategoriid" />
+                <ScalarProperty Name="kategoriad" ColumnName="kategoriad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_MUSTERI">
+            <EntityTypeMapping TypeName="Stok_DBModel.TBL_MUSTERI">
+              <MappingFragment StoreEntitySet="TBL_MUSTERI">
+                <ScalarProperty Name="musteriid" ColumnName="musteriid" />
+                <ScalarProperty Name="musteriad" ColumnName="musteriad" />
+                <ScalarProperty Name="musterisoyad" ColumnName="musterisoyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_SATIS">
+            <EntityTypeMapping TypeName="Stok_DBModel.TBL_SATIS">
+              <MappingFragment StoreEntitySet="TBL_SATIS">
+                <ScalarProperty Name="satisid" ColumnName="satisid" />
+                <ScalarProperty Name="urun" ColumnName="urun" />
+                <ScalarProperty Name="musteri" ColumnName="musteri" />
+                <ScalarProperty Name="adet" ColumnName="adet" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_URUN">
+            <EntityTypeMapping TypeName="Stok_DBModel.TBL_URUN">
+              <MappingFragment StoreEntitySet="TBL_URUN">
+                <ScalarProperty Name="urunid" ColumnName="urunid" />
+                <ScalarProperty Name="urunad" ColumnName="urunad" />
+                <ScalarProperty Name="marka" ColumnName="marka" />
+                <ScalarProperty Name="urunkategori" ColumnName="urunkategori" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+                <ScalarProperty Name="stok" ColumnName="stok" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

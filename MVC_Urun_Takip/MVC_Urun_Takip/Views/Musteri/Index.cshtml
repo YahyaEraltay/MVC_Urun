@@ -1,0 +1,44 @@
+﻿@using MVC_Urun_Takip.Models.Entity
+@using PagedList
+@model  List<TBL_MUSTERI>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<table id="table1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>MÜŞTERİ ID</th>
+            <th>MÜSTERİ ADI</th>
+            <th>MÜSTERİ SOYADI</th>
+            <th>İŞLEMLER</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            <tr>
+                <td>@x.musteriid</td>
+                <td>@x.musteriad</td>
+                <td>@x.musterisoyad</td>
+                <td>
+                    @Html.ActionLink("Sil", "Sil", new { id = x.musteriid }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek İstiyor Musunuz?')" })
+                    <a href="/Musteri/MusteriGetir/@x.musteriid" class="btn btn-warning" style="margin-left:5%">Güncelle</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script>
+    $('#table1').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+        }
+    });
+</script>
+<a href="/Musteri/YeniMusteri/" class="btn btn-success">Müşteri Ekle</a>
+

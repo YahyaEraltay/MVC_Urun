@@ -1,0 +1,18 @@
+﻿@model MVC_Urun_Takip.Models.Entity.TBL_KATEGORI
+@{
+    ViewBag.Title = "KategoriGetir";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@using (Html.BeginForm("Guncelle", "Kategori", FormMethod.Post))
+{
+<div class="form-group">
+    @Html.LabelFor(m => m.kategoriid, "Kategori ID")
+    @Html.TextBoxFor(m => m.kategoriid, new { @class = "form-control", @readonly = "readonly" })
+    <br />
+    @Html.LabelFor(m => m.kategoriad, "Kategori Adı")
+    @Html.TextBoxFor(m => m.kategoriad, new { @class = "form-control" })
+</div>
+<div>
+    <button class="btn btn-warning">Kategori Güncelle</button>
+</div>
+}

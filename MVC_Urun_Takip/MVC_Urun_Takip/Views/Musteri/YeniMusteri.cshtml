@@ -1,0 +1,26 @@
+﻿@model MVC_Urun_Takip.Models.Entity.TBL_MUSTERI
+@{
+    ViewBag.Title = "YeniMusteri";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>Yeni Müşteri</h2>
+<form class="form-group" method="post" style="margin-top:4%">
+    <div>
+        <label>Müşteri Adı </label>
+        @Html.TextBoxFor(m => m.musteriad, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.musteriad, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:2%">
+        <label>Müsteri Soyadı</label>
+        @Html.TextBoxFor(m => m.musterisoyad, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.musterisoyad, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:2%">
+        <button class="btn btn-success" id="btn">Müşteri Ekle</button>
+    </div>
+    <script>
+        $('#btn').click(function () { alert('Ekleme İşlemi Yapıldı!'); });
+    </script>
+</form>
+

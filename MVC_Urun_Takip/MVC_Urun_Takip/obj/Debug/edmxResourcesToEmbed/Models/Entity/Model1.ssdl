@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Stok_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TBL_KATEGORI">
+    <Key>
+      <PropertyRef Name="kategoriid" />
+    </Key>
+    <Property Name="kategoriid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kategoriad" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TBL_MUSTERI">
+    <Key>
+      <PropertyRef Name="musteriid" />
+    </Key>
+    <Property Name="musteriid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="musteriad" Type="varchar" MaxLength="50" />
+    <Property Name="musterisoyad" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TBL_SATIS">
+    <Key>
+      <PropertyRef Name="satisid" />
+    </Key>
+    <Property Name="satisid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="urun" Type="int" />
+    <Property Name="musteri" Type="int" />
+    <Property Name="adet" Type="tinyint" />
+    <Property Name="fiyat" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="TBL_URUN">
+    <Key>
+      <PropertyRef Name="urunid" />
+    </Key>
+    <Property Name="urunid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="urunad" Type="varchar" MaxLength="50" />
+    <Property Name="marka" Type="varchar" MaxLength="50" />
+    <Property Name="urunkategori" Type="int" />
+    <Property Name="fiyat" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="stok" Type="tinyint" />
+  </EntityType>
+  <Association Name="FK_TBL_SATIS_TBL_MUSTERI">
+    <End Role="TBL_MUSTERI" Type="Self.TBL_MUSTERI" Multiplicity="0..1" />
+    <End Role="TBL_SATIS" Type="Self.TBL_SATIS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_MUSTERI">
+        <PropertyRef Name="musteriid" />
+      </Principal>
+      <Dependent Role="TBL_SATIS">
+        <PropertyRef Name="musteri" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBL_SATIS_TBL_URUN">
+    <End Role="TBL_URUN" Type="Self.TBL_URUN" Multiplicity="0..1" />
+    <End Role="TBL_SATIS" Type="Self.TBL_SATIS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_URUN">
+        <PropertyRef Name="urunid" />
+      </Principal>
+      <Dependent Role="TBL_SATIS">
+        <PropertyRef Name="urun" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBL_URUN_TBL_KATEGORI">
+    <End Role="TBL_KATEGORI" Type="Self.TBL_KATEGORI" Multiplicity="0..1" />
+    <End Role="TBL_URUN" Type="Self.TBL_URUN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_KATEGORI">
+        <PropertyRef Name="kategoriid" />
+      </Principal>
+      <Dependent Role="TBL_URUN">
+        <PropertyRef Name="urunkategori" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Stok_DBModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TBL_KATEGORI" EntityType="Self.TBL_KATEGORI" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TBL_MUSTERI" EntityType="Self.TBL_MUSTERI" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TBL_SATIS" EntityType="Self.TBL_SATIS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TBL_URUN" EntityType="Self.TBL_URUN" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TBL_SATIS_TBL_MUSTERI" Association="Self.FK_TBL_SATIS_TBL_MUSTERI">
+      <End Role="TBL_MUSTERI" EntitySet="TBL_MUSTERI" />
+      <End Role="TBL_SATIS" EntitySet="TBL_SATIS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBL_SATIS_TBL_URUN" Association="Self.FK_TBL_SATIS_TBL_URUN">
+      <End Role="TBL_URUN" EntitySet="TBL_URUN" />
+      <End Role="TBL_SATIS" EntitySet="TBL_SATIS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBL_URUN_TBL_KATEGORI" Association="Self.FK_TBL_URUN_TBL_KATEGORI">
+      <End Role="TBL_KATEGORI" EntitySet="TBL_KATEGORI" />
+      <End Role="TBL_URUN" EntitySet="TBL_URUN" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
